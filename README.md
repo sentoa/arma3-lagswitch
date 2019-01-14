@@ -1,4 +1,4 @@
-# Arma 3 Lagg Switch
+# Arma 3 Lag Switch
 [![N|Solid](http://servon.eu/images/logo.png)](http://servon.eu)
 
 Created by Peter K - Software Engineer @ ServON - email : peter(at)servon(dot)co
