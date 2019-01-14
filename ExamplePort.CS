@@ -33,7 +33,7 @@ namespace ConsoleApp2
                         FirewallProfiles.Domain | FirewallProfiles.Private | FirewallProfiles.Public)
                     {
                         Description =
-                            "'My Port Rule' Allows Inbound traffic to my local Proxy Server from Wireless Adapters",
+                            "'LS' LS - Inbound",
                         InterfaceTypes = FirewallInterfaceTypes.Wireless,
                         Protocol = FirewallProtocol.TCP
                     };
@@ -43,7 +43,7 @@ namespace ConsoleApp2
                        FirewallProfiles.Domain | FirewallProfiles.Private | FirewallProfiles.Public)
                 {
                     Description =
-                           "'My Port Rule' Allows Inbound traffic to my local Proxy Server from Wireless Adapters",
+                           "'LS' LS - Outbound",
                     InterfaceTypes = FirewallInterfaceTypes.Wireless,
                     Protocol = FirewallProtocol.TCP
                 };
