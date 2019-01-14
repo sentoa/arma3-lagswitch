@@ -16,6 +16,7 @@ namespace ConsoleApp2
     class Program
     {
        static bool isRunning = true;
+
         [STAThread]
         static void Main(string[] args)
         {
@@ -27,7 +28,7 @@ namespace ConsoleApp2
         {
             while (isRunning)
             {
-                    var rule = new StandardRuleWin8("LS", 2302, FirewallAction.Block,
+                    var inbound = new StandardRuleWin8("LS", 2302, FirewallAction.Block,
                         FirewallDirection.Inbound,
                         FirewallProfiles.Domain | FirewallProfiles.Private | FirewallProfiles.Public)
                     {
@@ -37,19 +38,30 @@ namespace ConsoleApp2
                         Protocol = FirewallProtocol.TCP
                     };
 
+                var outbound = new StandardRuleWin8("LS", 2302, FirewallAction.Block,
+                       FirewallDirection.Outbound,
+                       FirewallProfiles.Domain | FirewallProfiles.Private | FirewallProfiles.Public)
+                {
+                    Description =
+                           "'My Port Rule' Allows Inbound traffic to my local Proxy Server from Wireless Adapters",
+                    InterfaceTypes = FirewallInterfaceTypes.Wireless,
+                    Protocol = FirewallProtocol.TCP
+                };
+
                 Thread.Sleep(40);
 
                 if ((Keyboard.GetKeyStates(Key.F1) & KeyStates.Down) > 0)
                 {
                     Console.WriteLine("Blocked");
-                    WindowsFirewallHelper.FirewallAPIv2.Firewall.Instance.Rules.Add(rule);
+                    WindowsFirewallHelper.FirewallAPIv2.Firewall.Instance.Rules.Add(inbound);
+                    WindowsFirewallHelper.FirewallAPIv2.Firewall.Instance.Rules.Add(outbound);
                 }
 
                 if ((Keyboard.GetKeyStates(Key.F2) & KeyStates.Down) > 0)
                 {
                     Console.WriteLine("Unblocked");
-                    FirewallManager.Instance.Rules.Remove(rule);
-                    WindowsFirewallHelper.FirewallAPIv2.Firewall.Instance.Rules.Remove(rule);
+                    WindowsFirewallHelper.FirewallAPIv2.Firewall.Instance.Rules.Remove(outbound);
+                    WindowsFirewallHelper.FirewallAPIv2.Firewall.Instance.Rules.Remove(inbound);
                 }
             }
         }
