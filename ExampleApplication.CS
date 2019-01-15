@@ -9,47 +9,61 @@ using System.Threading;
 using WindowsFirewallHelper;
 using WindowsFirewallHelper.FirewallAPIv2;
 using WindowsFirewallHelper.FirewallAPIv2.Rules;
+using System.Diagnostics;
 
 namespace ConsoleApp2
 {
 
     class Program
     {
-       static bool isRunning = true;
+        static bool isRunning = true;
+        static string location;
+        static string firewhash = System.Guid.NewGuid().ToString();
+
         [STAThread]
         static void Main(string[] args)
         {
+            Console.WriteLine("Using Policy Hash " + firewhash);
+            Console.WriteLine("Enter Path for Arma 3 : ");
+            location = Console.ReadLine();
+            Console.WriteLine("Location Set : " + location);
+            Console.WriteLine("Lag Switch is now available - have fun xd");
             Recursive();
         }
 
         [STAThread]
         static void KB()
         {
+            // Creating a new Process
+            Process process = new Process();
+
+            // Stop the process from opening a new window
+            process.StartInfo.RedirectStandardOutput = true;
+            process.StartInfo.UseShellExecute = false;
+            process.StartInfo.CreateNoWindow = true;
+
+            // Setup executable and parameters
+            process.StartInfo.FileName = "netsh.exe";
+
             while (isRunning)
             {
-                    var rule = new StandardRuleWin8("LS", @"C:\Program Files (x86)\Steam\steamapps\common\Arma 3\arma3.exe", FirewallAction.Block,
-                        FirewallDirection.Outbound,
-                        FirewallProfiles.Domain | FirewallProfiles.Private | FirewallProfiles.Public)
-                    {
-                        Description =
-                            "'My Port Rule' Allows Inbound traffic to my local Proxy Server from Wireless Adapters",
-                        InterfaceTypes = FirewallInterfaceTypes.Wireless,
-                        Protocol = FirewallProtocol.TCP
-                    };
 
                 Thread.Sleep(40);
 
                 if ((Keyboard.GetKeyStates(Key.F1) & KeyStates.Down) > 0)
                 {
+                    process.StartInfo.Arguments = ("advfirewall firewall add rule name =\"" + firewhash + "\" dir=in action=block program=\"" + location + "\" enable=yes");
+                    process.StartInfo.Arguments = ("advfirewall firewall add rule name =\"" + firewhash + "\" dir=out action=block program=\"" + location + "\" enable=yes");
+                    process.Start();
+                    process.Start();
                     Console.WriteLine("Blocked");
-                    WindowsFirewallHelper.FirewallAPIv2.Firewall.Instance.Rules.Add(rule);
                 }
 
                 if ((Keyboard.GetKeyStates(Key.F2) & KeyStates.Down) > 0)
                 {
+                    process.StartInfo.Arguments = ("advfirewall firewall delete rule name=\"" + firewhash + "\" ");
+                    process.Start();
                     Console.WriteLine("Unblocked");
-                    FirewallManager.Instance.Rules.Remove(rule);
-                    WindowsFirewallHelper.FirewallAPIv2.Firewall.Instance.Rules.Remove(rule);
                 }
             }
         }
