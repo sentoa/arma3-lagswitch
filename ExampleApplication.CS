@@ -11,7 +11,7 @@ using WindowsFirewallHelper.FirewallAPIv2;
 using WindowsFirewallHelper.FirewallAPIv2.Rules;
 using System.Diagnostics;
 
-namespace ConsoleApp2
+namespace LagSwitch
 {
 
     class Program
