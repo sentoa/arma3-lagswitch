@@ -28,7 +28,7 @@ namespace LagSwitch
             location = Console.ReadLine();
             Console.WriteLine("Location Set : " + location);
             Console.WriteLine("Lag Switch is now available - have fun xd");
-            Recursive();
+            Start();
         }
 
         [STAThread]
@@ -67,7 +67,7 @@ namespace LagSwitch
                 }
             }
         }
-        static void Recursive()
+        static void Start()
         {
             Thread TH = new Thread(KB);
             TH.SetApartmentState(ApartmentState.STA);
