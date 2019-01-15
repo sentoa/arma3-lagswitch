@@ -9,7 +9,8 @@ About
 Arma 3 Lag Switch is a dynamic lagg switch, which shut all the connection from the application with a single click.
 The application only works on Windows OS, and coded in C# in Visual Studio .NET Framework 7.1.
 
-Artifacts can be downloaded here : 
+Download the latest release here : 
+https://github.com/sentoa/arma3-lagswitch/releases
 
 Disclaimer
 ----
